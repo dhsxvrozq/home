@@ -4,21 +4,30 @@ SESSION="acab"
 
 source /home/john/Scripts/home/.env
 
+# Убиваем предыдущую tmux-сессию
 tmux kill-server
 sleep 0.05
-# Запускаем новую сессию в фоне
+
+# Создаем новую сессию в фоне
 tmux new-session -d -s $SESSION
 
-# В первой панели (окне 0) запускаем команду (например, ssh)
-tmux send-keys -t $SESSION:0 "$SERVER1" C-m
-# # Делим окно на две панели (вертикально)
-tmux split-window -h -t $SESSION:0
-tmux split-window -v -t $SESSION:0.1
+# Левая верхняя панель (0.0)
+tmux send-keys -t $SESSION:0.0 "$SERVER1" C-m
+
+# Разделяем вправо (правая верхняя панель: 0.1)
+tmux split-window -h -t $SESSION:0.0
 tmux send-keys -t $SESSION:0.1 "$SERVER2" C-m
 
-# # Делим первую панель горизонтально, чтобы получить сетку 2x2
+# Разделяем правую верхнюю вниз (правая нижняя: 0.2)
+tmux split-window -v -t $SESSION:0.1
+# Можно запустить что-то при желании: tmux send-keys -t $SESSION:0.2 "$SERVER4" C-m
+
+# Возвращаемся к левой верхней и делим её вниз (левая нижняя: 0.3)
 tmux select-pane -t $SESSION:0.0
 tmux split-window -v -t $SESSION:0.0
+
+# tmux select-pane -t $SESSION:0.2
+tmux send-keys -t $SESSION:0.1 "$SERVER3" C-m
 
 
 # tmux send-keys -t $SESSION:0.2 'echo "Панель 3"; sleep 10' C-m

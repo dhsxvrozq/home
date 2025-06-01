@@ -2,7 +2,7 @@
 
 SESSION="acab"
 
-source /home/john/Scripts/home/.env
+source /home/john/Scripts/HOME/.env
 
 # Убиваем предыдущую tmux-сессию
 tmux kill-server
@@ -16,7 +16,7 @@ tmux send-keys -t $SESSION:0.0 "$SERVER1" C-m
 
 # Разделяем вправо (правая верхняя панель: 0.1)
 tmux split-window -h -t $SESSION:0.0
-tmux send-keys -t $SESSION:0.1 "$SERVER2" C-m
+# tmux send-keys -t $SESSION:0.1 "$SERVER2" C-m
 
 # Разделяем правую верхнюю вниз (правая нижняя: 0.2)
 tmux split-window -v -t $SESSION:0.1
@@ -27,18 +27,8 @@ tmux select-pane -t $SESSION:0.0
 tmux split-window -v -t $SESSION:0.0
 
 # tmux select-pane -t $SESSION:0.2
-tmux send-keys -t $SESSION:0.1 "$SERVER3" C-m
+# tmux send-keys -t $SESSION:0.1 "$SERVER3" C-m
 
-
-# tmux send-keys -t $SESSION:0.2 'echo "Панель 3"; sleep 10' C-m
-
-# # Делим вторую панель горизонтально
-# tmux select-pane -t $SESSION:0.1
-# tmux split-window -v -t $SESSION:0.1
-# tmux send-keys -t $SESSION:0.3 'echo "Панель 4"; sleep 10' C-m
-
-# # Выбираем первую панель
-# tmux select-pane -t $SESSION:0.0
 
 # # Подключаемся к сессии
 tmux attach -t $SESSION

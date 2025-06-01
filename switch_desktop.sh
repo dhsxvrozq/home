@@ -1,9 +1,15 @@
 #!/bin/bash
-# Получаем общее количество рабочих столов
-DESKTOP_COUNT=$(wmctrl -d | wc -l)
 # Получаем текущий рабочий стол
 CURRENT_DESKTOP=$(wmctrl -d | grep '*' | cut -d' ' -f1)
-# Вычисляем предыдущий рабочий стол
-PREV_DESKTOP=$(( (CURRENT_DESKTOP - 1 + DESKTOP_COUNT) % DESKTOP_COUNT ))
-# Переключаемся на предыдущий рабочий стол
-wmctrl -s $PREV_DESKTOP
+
+# Проверяем, где мы находимся
+if [ "$CURRENT_DESKTOP" -eq 0 ]; then
+    # Если на первом (индекс 0), переключаемся на второй (индекс 1)
+    wmctrl -s 1
+elif [ "$CURRENT_DESKTOP" -eq 1 ]; then
+    # Если на втором (индекс 1), переключаемся на первый (индекс 0)
+    wmctrl -s 0
+else
+    # Если на любом другом рабочем столе (индекс 2 и выше), переключаемся на первый (индекс 0)
+    wmctrl -s 0
+fi
